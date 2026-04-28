@@ -1019,7 +1019,7 @@ function esc(str){const d=document.createElement('div');d.textContent=str;return
 function monthShort(datum){const m=parseInt(datum.split('.')[1],10);return MONTHS_SHORT[m-1]||''}
 function dayNum(datum){return datum.split('.')[0]}
 function sanitize(s){return typeof s!=='string'?'':s.replace(/[\u0000-\u001F\u007F]/g,'').replace(/javascript\s*:/gi,'').trim().slice(0,2000)}
-function sanitizeUrl(url){if(!url||typeof url!=='string')return'';try{const u=new URL(url);if(u.protocol!=='https:')return'';if(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url))return url;return'';}catch{return''}}
+function sanitizeUrl(url){if(!url||typeof url!=='string')return'';if(url.startsWith('data:image/'))return url;try{const u=new URL(url);if(u.protocol!=='https:'&&u.protocol!=='http:')return'';if(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url))return url;return'';}catch{return''}}
 
 // ========== ROUTING ==========
 let currentPage = 'home';
@@ -1964,24 +1964,18 @@ function handleNewsFileUpload(input){
   const validExts=['.jpg','.jpeg','.png','.gif','.webp'];
   const fileName=file.name.toLowerCase();
   const hasValidExt=validExts.some(ext=>fileName.endsWith(ext));
-  // Check extension first (more reliable than MIME type)
+  // Check extension first (most reliable)
   if(!hasValidExt){
     alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
     input.value='';
     newsFileValid=false;
     return;
   }
-  // Also check MIME type as secondary validation
+  // Secondary MIME type check - but don't reject if browser reports wrong MIME
   const validMimes=['image/jpeg','image/png','image/gif','image/webp'];
   if(file.type && !validMimes.includes(file.type)){
-    // If MIME type doesn't match but extension does, still allow it (browser quirk)
-    // Only reject if both extension AND mime type are wrong
-    if(!hasValidExt){
-      alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
-      input.value='';
-      newsFileValid=false;
-      return;
-    }
+    // Log warning but still allow - extension is authoritative
+    console.warn('MIME type mismatch for '+fileName+': '+file.type+' (allowed by extension)');
   }
   if(file.size>5*1024*1024){
     alert('Die Datei ist zu groß. Maximale Größe: 5 MB.');
@@ -2063,24 +2057,19 @@ function handleEditFileUpload(input,teamSlug){
   const validExts=['.jpg','.jpeg','.png'];
   const fileName=file.name.toLowerCase();
   const hasValidExt=validExts.some(ext=>fileName.endsWith(ext));
-  // Check extension first (more reliable than MIME type)
+  // Check extension first (most reliable)
   if(!hasValidExt){
     alert('Ungültiges Bildformat. Bitte nur JPG oder PNG verwenden.');
     input.value='';
     editFileValidByTeam[teamSlug]=false;
     return;
   }
-  // Also check MIME type as secondary validation
+  // Secondary MIME type check - but don't reject if browser reports wrong MIME
+  // Some browsers may report incorrect MIME types, so we trust the extension
   const validMimes=['image/jpeg','image/png'];
   if(file.type && !validMimes.includes(file.type)){
-    // If MIME type doesn't match but extension does, still allow it (browser quirk)
-    // Only reject if both extension AND mime type are wrong
-    if(!hasValidExt){
-      alert('Ungültiges Bildformat. Bitte nur JPG oder PNG verwenden.');
-      input.value='';
-      editFileValidByTeam[teamSlug]=false;
-      return;
-    }
+    // Log warning but still allow - extension is authoritative
+    console.warn('MIME type mismatch for '+fileName+': '+file.type+' (allowed by extension)');
   }
   if(file.size>5*1024*1024){
     alert('Die Datei ist zu groß. Maximale Größe: 5 MB.');
@@ -2110,14 +2099,27 @@ function handleEditFileUpload(input,teamSlug){
 }
 
 function selectTeamEdit(slug){
+  // Preserve validation state for the previously selected team before switching
+  if(selectedTeamEdit && selectedTeamEdit !== slug){
+    // Keep the validation state as-is for the old team
+    // Don't reset it - the user may have already uploaded a valid file
+  }
   selectedTeamEdit=slug;
-  editFileValidByTeam[slug]=false; // Reset file validation flag for the newly selected team
-  // Also clear any file input state
+  // Initialize validation flag for new team if not exists
+  if(editFileValidByTeam[slug]===undefined){
+    editFileValidByTeam[slug]=false;
+  }
+  // Clear file input UI but don't affect validation state
   setTimeout(()=>{
     const fi=document.getElementById('edit-file-input');
     const fn=document.getElementById('edit-file-name');
     if(fi)fi.value='';
     if(fn)fn.textContent='';
+    // Clear preview
+    const prev=document.getElementById('edit-foto-preview');
+    const img=document.getElementById('edit-foto-preview-img');
+    if(prev)prev.style.display='none';
+    if(img)img.src='';
   },0);
   switchDashTab('info')
 }

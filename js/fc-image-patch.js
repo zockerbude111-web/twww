@@ -2,21 +2,21 @@
   "use strict";
 
   /* ── constants ─────────────────────────────────────────────────────────── */
-  const VALID_IMG_EXT = /\.(jpg|jpeg|png|gif|webp)(\?[^\s]*)?$/i;
-  const VALID_IMG_URL = /^https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp)(\?[^\s]*)?$/i;
+  const VALID_IMG_EXT = /\.(jpg|jpeg|png)(\?[^\s]*)?$/i;
+  const VALID_IMG_URL = /^https?:\/\/[^\s]+\.(jpg|jpeg|png)(\?[^\s]*)?$/i;
   const BLOCKED_DOMAINS = [
     "youtube","youtu.be","vimeo","dailymotion","twitch",
     "facebook","twitter","instagram","tiktok","reddit"
   ];
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-  const ALLOWED_MIME  = ["image/jpeg","image/png","image/gif","image/webp"];
+  const ALLOWED_MIME  = ["image/jpeg","image/png"];
 
   /* ── URL validation ────────────────────────────────────────────────────── */
   function validateImageUrl(raw) {
     const url = (raw || "").trim();
     if (!url) return { ok: true };
     if (!VALID_IMG_URL.test(url))
-      return { ok: false, msg: "URL muss direkt auf .jpg, .jpeg, .png, .gif oder .webp enden." };
+      return { ok: false, msg: "URL muss direkt auf .jpg, .jpeg oder .png enden." };
     if (BLOCKED_DOMAINS.some(d => url.toLowerCase().includes(d)))
       return { ok: false, msg: "Video- und Social-Media-Links sind nicht erlaubt." };
     return { ok: true };
@@ -83,7 +83,7 @@
 
     const fileInput = document.createElement("input");
     fileInput.type   = "file";
-    fileInput.accept = "image/jpeg,image/png,image/gif,image/webp";
+    fileInput.accept = "image/jpeg,image/png";
     fileInput.style.display = "none";
     lbl.appendChild(fileInput);
 
@@ -99,14 +99,14 @@
 
     const hint = document.createElement("p");
     hint.style.cssText = "font-size:11px;color:#94a3b8;margin:6px 0 0;";
-    hint.textContent   = "Max. 5 MB · JPG / PNG / GIF / WEBP";
+    hint.textContent   = "Max. 5 MB · JPG / PNG";
 
     fileInput.addEventListener("change", () => {
       const file = fileInput.files[0];
       if (!file) return;
 
       if (!ALLOWED_MIME.includes(file.type)) {
-        alert("Nur JPG, PNG, GIF und WEBP sind erlaubt.");
+        alert("Nur JPG und PNG sind erlaubt.");
         fileInput.value = "";
         return;
       }
@@ -139,7 +139,7 @@
     urlInput.dataset.fcPatched = "1";
 
     // Better placeholder
-    urlInput.placeholder = "https://example.com/foto.jpg  (nur .jpg/.png/.gif/.webp)";
+    urlInput.placeholder = "https://example.com/foto.jpg  (nur .jpg/.png)";
 
     // Validate on blur
     urlInput.addEventListener("blur", () => {

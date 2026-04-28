@@ -126,7 +126,7 @@
         <h1 class="hero-h1">Fußball für alle.<span>VfL Wilhelmshaven e. V.</span></h1>
         <p class="hero-desc">Von den Bambini bis zu den Alten Herren. Dein Verein, deine Heimat, deine Mannschaft.</p>
         <div class="hero-btns">
-          <button class="btn-red" onclick="navigate('kontakt')">Probetraining buchen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          <button class="btn-red" onclick="navigate('kontakt')">Mitglied werden <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
           <button class="btn-outline" onclick="navigate('team','1-herren')">Unsere Mannschaften</button>
         </div>
       </div>

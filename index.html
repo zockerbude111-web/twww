@@ -2032,28 +2032,28 @@ function editNews(teamSlug,index){
   }catch(e){alert('Fehler beim Laden: '+e.message)}
 }
 
-// Handle edit file upload for team photo
-let editFileValid = false;
+// Handle edit file upload for team photo - tracks validity per team slug
+let editFileValidByTeam = {}; // Map of teamSlug -> boolean
 function handleEditFileUpload(input,teamSlug){
   const file=input.files[0];
-  if(!file){editFileValid=false;return;}
-  const validMimes=['image/jpeg','image/png','image/gif','image/webp'];
-  const validExts=['.jpg','.jpeg','.png','.gif','.webp'];
+  if(!file){editFileValidByTeam[teamSlug]=false;return;}
+  const validMimes=['image/jpeg','image/png'];
+  const validExts=['.jpg','.jpeg','.png'];
   const fileName=file.name.toLowerCase();
   const hasValidExt=validExts.some(ext=>fileName.endsWith(ext));
   if(!hasValidExt||!validMimes.includes(file.type)){
-    alert('Nur JPG, PNG, GIF und WEBP sind erlaubt.');
+    alert('Nur JPG und PNG sind erlaubt.');
     input.value='';
-    editFileValid=false;
+    editFileValidByTeam[teamSlug]=false;
     return;
   }
   if(file.size>5*1024*1024){
     alert('Die Datei ist zu groß. Maximale Größe: 5 MB.');
     input.value='';
-    editFileValid=false;
+    editFileValidByTeam[teamSlug]=false;
     return;
   }
-  editFileValid=true;
+  editFileValidByTeam[teamSlug]=true;
   const reader=new FileReader();
   reader.onload=function(e){
     const dataUrl=e.target.result;
@@ -2071,7 +2071,7 @@ function handleEditFileUpload(input,teamSlug){
 
 function selectTeamEdit(slug){
   selectedTeamEdit=slug;
-  editFileValid=false; // Reset file validation flag when switching teams
+  editFileValidByTeam[slug]=false; // Reset file validation flag when switching teams
   switchDashTab('info')
 }
 function renderTeamEditForm(team){
@@ -2139,9 +2139,9 @@ function saveTeamEdit(slug){
     let foto='';
     if(fotoRaw){
       if(fotoRaw.startsWith('data:image/')){
-        // Must be from a validated local upload
-        if(!editFileValid){
-          alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
+        // Must be from a validated local upload - check per-team validation flag
+        if(!editFileValidByTeam[slug]){
+          alert('Ungültiges Bildformat. Bitte nur JPG oder PNG verwenden.');
           return;
         }
         foto=fotoRaw;

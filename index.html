@@ -497,6 +497,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
       </button>
       <div class="nav-links">
         <button class="nav-link-btn" data-page="home" onclick="navigate('home')">Start</button>
+        <button class="nav-link-btn" data-page="news" onclick="navigate('news')">Neuigkeiten</button>
         <div class="dropdown-wrap">
           <button class="nav-link-btn" id="nav-senioren">Senioren <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
           <div class="dropdown-menu" id="drop-senioren"></div>
@@ -536,6 +537,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
   </div>
   <div class="mobile-nav-body">
     <button class="mobile-nav-link" onclick="navigate('home');closeMobileNav()">Startseite</button>
+    <button class="mobile-nav-link" onclick="navigate('news');closeMobileNav()">Neuigkeiten</button>
     <div class="mobile-nav-section">
       <div class="mobile-nav-section-title">Senioren</div>
       <div id="mobile-senioren-links"></div>
@@ -1075,6 +1077,10 @@ function updateNavActive(page, param){
   const isJun = page==='team' && JUNIOREN.some(t=>t.slug===param);
   document.getElementById('nav-senioren').classList.toggle('active', isSen);
   document.getElementById('nav-junioren').classList.toggle('active', isJun);
+  // Highlight mobile nav links
+  document.querySelectorAll('.mobile-nav-link').forEach(b=>{
+    b.classList.toggle('active', b.textContent.includes(page==='home'?'Startseite':page==='news'?'Neuigkeiten':page==='training'?'Training':page==='abteilungen'?'Abteilungen':page==='verein'?'Verein':page==='kontakt'?'Kontakt':page==='downloads'?'Downloads':page==='vermietung'?'Vermietung':''));
+  });
 }
 
 // ========== HEADER ==========
@@ -1178,7 +1184,59 @@ function getNewsWithTrainer(){
   });
 }
 
-// ========== NEWS OVERVIEW ==========\nfunction showNewsOverview(){\n  navigate('news');\n}\n\nfunction renderNewsOverview(){\n  const grid=document.getElementById('news-overview-grid');\n  const allNews=getNewsWithTrainer();\n  grid.innerHTML=allNews.map((n,i)=>{\n    const bc=BADGE_COLORS[n.kategorie]||BADGE_COLORS.Allgemein;\n    const imgSrc = n.bildUrl || NEWS_IMGS[i%NEWS_IMGS.length] || '';\n    return `<article class="card news-card">\n      <div class="news-img-wrap">\n        <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">\n        <div class="news-img-grad"></div>\n        <span class="news-badge" style="background:${bc.bg};color:${bc.c}">${esc(n.kategorie)}</span>\n        <span class="news-date-badge">${esc(n.datum)}</span>\n      </div>\n      <div class="news-body">\n        <h3 class="news-title">${esc(n.titel)}</h3>\n        <p class="news-excerpt">${esc(n.text)}</p>\n        <div class="news-footer">\n          <span class="news-cat">${BADGE_ICONS[n.kategorie]||'📰'} ${esc(n.kategorie)}</span>\n          <span class="news-more">Lesen →</span>\n        </div>\n      </div>\n    </article>`;\n  }).join('');\n}\n\n// ========== TEAM PAGE ==========
+// ========== NEWS OVERVIEW ==========
+function showNewsOverview(){
+  navigate('news');
+}
+
+function renderNewsOverview(){
+  const grid=document.getElementById('news-overview-grid');
+  const allNews=getNewsWithTrainer();
+  grid.innerHTML=allNews.map((n,i)=>{
+    const bc=BADGE_COLORS[n.kategorie]||BADGE_COLORS.Allgemein;
+    const imgSrc = n.bildUrl || NEWS_IMGS[i%NEWS_IMGS.length] || '';
+    return `<article class="card news-card" style="cursor:pointer" onclick="openNewsDetail('${esc(n.titel.replace(/'/g, "\\'"))}')">
+      <div class="news-img-wrap">
+        <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">
+        <div class="news-img-grad"></div>
+        <span class="news-badge" style="background:${bc.bg};color:${bc.c}">${esc(n.kategorie)}</span>
+        <span class="news-date-badge">${esc(n.datum)}</span>
+      </div>
+      <div class="news-body">
+        <h3 class="news-title">${esc(n.titel)}</h3>
+        <p class="news-excerpt">${esc(n.text)}</p>
+        <div class="news-footer">
+          <span class="news-cat">${BADGE_ICONS[n.kategorie]||'📰'} ${esc(n.kategorie)}</span>
+          <span class="news-more">Lesen →</span>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function openNewsDetail(titel){
+  const allNews=getNewsWithTrainer();
+  const news=allNews.find(n=>n.titel===titel);
+  if(!news)return;
+  const modal=document.createElement('div');
+  modal.className='modal-open';
+  modal.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+  const bc=BADGE_COLORS[news.kategorie]||BADGE_COLORS.Allgemein;
+  const imgSrc = news.bildUrl || NEWS_IMGS[0] || '';
+  modal.innerHTML=`
+    <div style="background:#fff;border-radius:20px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+      <button onclick="this.closest('.modal-open').remove()" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,.5);border:none;border-radius:50%;width:40px;height:40px;color:#fff;cursor:pointer;font-size:20px;z-index:10;">&times;</button>
+      ${imgSrc?`<img src="${esc(imgSrc)}" style="width:100%;height:250px;object-fit:cover;border-radius:20px 20px 0 0;" alt="">`:''}
+      <div style="padding:32px;">
+        <span style="font-size:10px;font-weight:700;padding:4px 12px;border-radius:50px;background:${bc.bg};color:${bc.c};text-transform:uppercase;letter-spacing:.1em;">${esc(news.kategorie)}</span>
+        <h2 style="font-family:Impact,sans-serif;font-size:24px;color:var(--blue);margin:16px 0 8px;text-transform:uppercase;">${esc(news.titel)}</h2>
+        <p style="font-size:12px;color:#9ca3af;margin-bottom:24px;">${esc(news.datum)} ${news.teamName?'• '+esc(news.teamName):''}</p>
+        <div style="font-size:15px;color:#374151;line-height:1.7;white-space:pre-wrap;">${esc(news.text)}</div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
 function getTeamEdits(slug){
   try{
     const edits=JSON.parse(localStorage.getItem('fc_trainer_edits')||'{}');
@@ -2274,8 +2332,8 @@ function postNews(e){
     editingNewsTeam=null;
     showToast('Aktualisiert!');
   }else{
-    // Create new news
-    edits[slug]={...edits[slug],news:[...existing,{titel,text,datum,bildUrl}]};
+    // Create new news - add to beginning so newest appears first
+    edits[slug]={...edits[slug],news:[{titel,text,datum,bildUrl},...existing]};
     showToast('Veröffentlicht!');
   }
   localStorage.setItem('fc_trainer_edits',JSON.stringify(edits));

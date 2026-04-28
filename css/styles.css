@@ -624,3 +624,67 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 .card-title-blue{font-family:Impact,sans-serif;color:var(--blue);font-size:18px}
 .label-red-xs{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--red)}
 .card-desc-sm{font-size:13px;color:#6b7280;margin-top:12px;line-height:1.6}
+
+/* Additional utility classes for removing inline styles */
+.text-bold-blue{font-weight:700;color:var(--blue)}
+.hero-stripe-overlay{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.04) 10px,rgba(255,255,255,.04) 20px);opacity:.25}
+.hero-inner-relative{position:relative;max-width:1280px;margin:0 auto;padding:56px 20px}
+.grid-gap-32-end{display:grid;gap:32px;grid-template-columns:1fr;align-items:end}
+.bg-white-border-t{background:#fff;border-top:1px solid rgba(219,234,254,.5)}
+.container-pad-48{max-width:1280px;margin:0 auto;padding:48px 20px}
+.team-more-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3em;color:var(--red);margin-bottom:8px}
+.team-more-title{font-family:Impact,sans-serif;font-size:clamp(20px,3vw,28px);color:var(--blue);text-transform:uppercase;margin-bottom:24px}
+.grid-auto-220{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.sticky-filter-bar{background:#fff;border-bottom:1px solid rgba(219,234,254,.5);position:sticky;top:88px;z-index:40}
+.filter-bar-inner{max-width:1280px;margin:0 auto;padding:16px 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filter-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#9ca3af;margin-right:8px}
+.section-heading-mb{font-family:Impact,sans-serif;font-size:clamp(22px,3vw,32px);color:var(--blue);text-transform:uppercase;margin-bottom:24px}
+.section-heading-mt-mb{font-family:Impact,sans-serif;font-size:clamp(22px,3vw,32px);color:var(--blue);text-transform:uppercase;margin-top:48px;margin-bottom:24px}
+.table-container{background:#fff;border-radius:16px;border:1px solid rgba(219,234,254,.5);box-shadow:0 1px 3px rgba(0,0,0,.1);overflow:hidden;overflow-x:auto}
+.grid-auto-260{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.icon-box-red{width:48px;height:48px;border-radius:12px;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:16px}
+.card-title-impact{font-family:Impact,sans-serif;color:var(--blue);font-size:18px}
+.label-red-small{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--red)}
+.desc-text{font-size:13px;color:#6b7280;margin-top:12px;line-height:1.6}
+.section-py-custom{padding-top:64px;padding-bottom:80px}
+.bg-white-border-b{background:#fff;border-bottom:1px solid rgba(219,234,254,.5)}
+.stats-grid{max-width:1280px;margin:0 auto;padding:32px 20px;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.stat-center{text-align:center}
+.stat-number{font-family:Impact,sans-serif;font-size:36px;color:var(--red)}
+.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#9ca3af;margin-top:4px}
+.glow-bottom-auto{top:auto;bottom:-80px;left:-80px;right:auto}
+.contact-info-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.contact-info-icon.red{background:var(--red)}
+.contact-info-icon.blue{background:var(--blue)}
+.container-pad-48-x{max-width:1280px;margin:0 auto;padding:48px 20px}
+.success-heading{font-family:Impact,sans-serif;font-size:24px;color:#065f46;text-transform:uppercase;margin-bottom:8px}
+.success-text{color:#047857}
+.btn-link-reset{margin-top:24px;font-size:13px;font-weight:600;color:#047857;border:none;background:none;text-decoration:underline}
+.form-grid-mb{margin-bottom:20px}
+.form-field-mb{margin-bottom:20px}
+.form-checkbox-mb{margin-bottom:20px}
+.contact-side-flex{display:flex;flex-direction:column;gap:20px}
+.promo-box{background:linear-gradient(135deg,var(--red),var(--red-dark));border-radius:16px;padding:24px;color:#fff;position:relative;overflow:hidden}
+.promo-circle{position:absolute;top:-40px;right:-40px;width:128px;height:128px;border-radius:50%;background:rgba(255,255,255,.1)}
+.promo-title{font-weight:700;font-size:18px;margin-bottom:8px;position:relative}
+.promo-desc{font-size:13px;color:rgba(255,255,255,.85);line-height:1.6;position:relative}
+.info-box{background:#fff;border-radius:16px;border:1px solid rgba(219,234,254,.5);box-shadow:0 1px 3px rgba(0,0,0,.1);padding:24px}
+.info-box-title{font-weight:700;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.info-box-text{font-size:13px;color:#6b7280;line-height:1.8}
+.documents-container{max-width:1024px;margin:0 auto;padding:64px 20px}
+.hidden-col{display:none}
+.facilities-container{max-width:1280px;margin:0 auto;padding:64px 20px}
+.facilities-intro{margin-bottom:32px}
+.facilities-desc{font-size:13px;color:#6b7280}
+.booking-request{margin-top:48px;background:#f9fafb;border-radius:16px;padding:32px;border:1px solid rgba(219,234,254,.5);text-align:center}
+.booking-title{font-family:Impact,sans-serif;font-size:24px;color:var(--blue);text-transform:uppercase;margin-bottom:12px}
+.booking-desc{color:#6b7280;max-width:480px;margin:0 auto 24px;font-size:14px;line-height:1.6}
+.footer-social-item{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.footer-logo-box{width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px;flex-shrink:0}
+.footer-site-name{display:block;color:#fff;font-weight:700;font-size:13px;font-family:Impact,sans-serif;letter-spacing:.1em}
+.footer-site-city{display:block;color:rgba(190,219,255,.7);font-size:9px;letter-spacing:.2em}
+.footer-desc{color:rgba(190,219,255,.8);font-size:13px;line-height:1.7;margin-bottom:16px}
+.modal-icon{width:64px;height:64px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto 24px}
+.modal-title{font-family:Impact,sans-serif;font-size:22px;color:var(--blue);text-transform:uppercase;margin-bottom:8px}
+.modal-text{font-size:13px;color:#6b7280;margin-bottom:12px}
+.btn-logout{background:#f3f4f6;color:#374151;border:none;border-radius:50px;padding:12px 20px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}

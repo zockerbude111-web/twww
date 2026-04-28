@@ -1899,8 +1899,8 @@ function renderDashTab(myTeams,allNews){
             </div>
             <div class="form-field" style="margin-bottom:20px">
               <label class="form-label">Bild (optional)</label>
-              <input type="url" class="form-input" id="news-bildurl" placeholder="https://beispiel.de/bild.jpg" readonly style="background:#f9fafb;color:#9ca3af">
-              <p style="font-size:11px;color:#9ca3af;margin-top:4px">Laden Sie ein lokales Bild hoch oder verwenden Sie ein bestehendes</p>
+              <input type="url" class="form-input" id="news-bildurl" placeholder="https://beispiel.de/bild.jpg oder lokale Datei hochladen" style="background:#fff;color:#1a1a2e">
+              <p style="font-size:11px;color:#9ca3af;margin-top:4px">Fügen Sie eine URL ein oder laden Sie eine lokale Datei hoch (JPG/PNG/GIF/WEBP)</p>
               <div id="news-img-preview" style="display:none;margin-top:8px;border-radius:10px;overflow:hidden;height:100px"><img style="width:100%;height:100%;object-fit:cover" id="news-img-preview-img" alt=""></div>
               <div style="margin-top:10px">
                 <label class="upload-area" style="display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:#f0f4ff;border:2px dashed #94a3b8;border-radius:12px;padding:16px;font-size:13px;font-weight:700;color:#142850;transition:border-color .2s,background .2s;user-select:none;margin:0" onmouseenter="this.style.borderColor='#d72638';this.style.background='#fee2e2'" onmouseleave="this.style.borderColor='#94a3b8';this.style.background='#f0f4ff'">
@@ -1961,15 +1961,27 @@ let newsFileValid = false;
 function handleNewsFileUpload(input){
   const file=input.files[0];
   if(!file){newsFileValid=false;return;}
-  const validMimes=['image/jpeg','image/png','image/gif','image/webp'];
   const validExts=['.jpg','.jpeg','.png','.gif','.webp'];
   const fileName=file.name.toLowerCase();
   const hasValidExt=validExts.some(ext=>fileName.endsWith(ext));
-  if(!hasValidExt||!validMimes.includes(file.type)){
-    alert('Nur JPG, PNG, GIF und WEBP sind erlaubt.');
+  // Check extension first (more reliable than MIME type)
+  if(!hasValidExt){
+    alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
     input.value='';
     newsFileValid=false;
     return;
+  }
+  // Also check MIME type as secondary validation
+  const validMimes=['image/jpeg','image/png','image/gif','image/webp'];
+  if(file.type && !validMimes.includes(file.type)){
+    // If MIME type doesn't match but extension does, still allow it (browser quirk)
+    // Only reject if both extension AND mime type are wrong
+    if(!hasValidExt){
+      alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
+      input.value='';
+      newsFileValid=false;
+      return;
+    }
   }
   if(file.size>5*1024*1024){
     alert('Die Datei ist zu groß. Maximale Größe: 5 MB.');
@@ -1985,7 +1997,12 @@ function handleNewsFileUpload(input){
     const prev=document.getElementById('news-img-preview');
     const img=document.getElementById('news-img-preview-img');
     const fileName=document.getElementById('news-file-name');
-    if(urlInput)urlInput.value=dataUrl;
+    if(urlInput){
+      urlInput.value=dataUrl;
+      urlInput.readOnly=false; // Allow editing if needed
+      urlInput.style.background='#fff';
+      urlInput.style.color='#1a1a2e';
+    }
     if(prev)prev.style.display='block';
     if(img)img.src=dataUrl;
     if(fileName)fileName.textContent=file.name;
@@ -2043,15 +2060,27 @@ let editFileValidByTeam = {}; // Map of teamSlug -> boolean
 function handleEditFileUpload(input,teamSlug){
   const file=input.files[0];
   if(!file){editFileValidByTeam[teamSlug]=false;return;}
-  const validMimes=['image/jpeg','image/png'];
   const validExts=['.jpg','.jpeg','.png'];
   const fileName=file.name.toLowerCase();
   const hasValidExt=validExts.some(ext=>fileName.endsWith(ext));
-  if(!hasValidExt||!validMimes.includes(file.type)){
-    alert('Nur JPG und PNG sind erlaubt.');
+  // Check extension first (more reliable than MIME type)
+  if(!hasValidExt){
+    alert('Ungültiges Bildformat. Bitte nur JPG oder PNG verwenden.');
     input.value='';
     editFileValidByTeam[teamSlug]=false;
     return;
+  }
+  // Also check MIME type as secondary validation
+  const validMimes=['image/jpeg','image/png'];
+  if(file.type && !validMimes.includes(file.type)){
+    // If MIME type doesn't match but extension does, still allow it (browser quirk)
+    // Only reject if both extension AND mime type are wrong
+    if(!hasValidExt){
+      alert('Ungültiges Bildformat. Bitte nur JPG oder PNG verwenden.');
+      input.value='';
+      editFileValidByTeam[teamSlug]=false;
+      return;
+    }
   }
   if(file.size>5*1024*1024){
     alert('Die Datei ist zu groß. Maximale Größe: 5 MB.');
@@ -2067,7 +2096,12 @@ function handleEditFileUpload(input,teamSlug){
     const prev=document.getElementById('edit-foto-preview');
     const img=document.getElementById('edit-foto-preview-img');
     const fileName=document.getElementById('edit-file-name');
-    if(urlInput)urlInput.value=dataUrl;
+    if(urlInput){
+      urlInput.value=dataUrl;
+      urlInput.readOnly=false; // Allow editing if needed
+      urlInput.style.background='#fff';
+      urlInput.style.color='#1a1a2e';
+    }
     if(prev)prev.style.display='block';
     if(img){img.src=dataUrl;img.onload=null;} // Force re-render
     if(fileName)fileName.textContent=file.name;
@@ -2111,7 +2145,8 @@ function renderTeamEditForm(team){
     </div>
     <div class="form-field" style="margin-bottom:20px">
       <label class="form-label">Mannschaftsfoto</label>
-      <input class="form-input" id="edit-foto" value="${esc(fotoUrl)}" readonly placeholder="Lokale Datei hochladen" style="background:#f9fafb;color:#9ca3af">
+      <input class="form-input" id="edit-foto" value="${esc(fotoUrl)}" placeholder="https://example.com/foto.jpg oder lokale Datei hochladen" style="background:#fff;color:#1a1a2e">
+      <p style="font-size:11px;color:#9ca3af;margin-top:4px">Fügen Sie eine URL ein (nur .jpg/.jpeg/.png) oder laden Sie eine lokale Datei hoch</p>
       <div id="edit-foto-preview" style="margin-top:8px;border-radius:10px;overflow:hidden;height:120px;display:none">
         <img id="edit-foto-preview-img" src="" style="width:100%;height:100%;object-fit:cover" alt="">
       </div>
@@ -2144,11 +2179,7 @@ function saveTeamEdit(slug){
     const tp=sanitize(document.getElementById('edit-tp').value);
     const fotoRaw=document.getElementById('edit-foto').value.trim();
     
-    // Get the previously saved URL for this team to allow it
-    const existingEdits=JSON.parse(localStorage.getItem('fc_trainer_edits')||'{}');
-    const previousUrl=(existingEdits[slug]&&existingEdits[slug].fotoUrl)||'';
-    
-    // Validate image: must be either a valid data URL from upload OR the previous URL
+    // Validate image: must be either a valid data URL from upload OR a valid external URL
     let foto='';
     if(fotoRaw){
       if(fotoRaw.startsWith('data:image/')){
@@ -2158,13 +2189,14 @@ function saveTeamEdit(slug){
           return;
         }
         foto=fotoRaw;
-      }else if(fotoRaw===previousUrl){
-        // Allow the previously saved URL
-        foto=fotoRaw;
       }else{
-        // Reject any new external URL pasted directly
-        alert('Aus Sicherheitsgründen können keine externen URLs direkt eingefügt werden. Bitte laden Sie ein lokales Bild hoch oder verwenden Sie das gespeicherte Bild.');
-        return;
+        // External URL - validate extension
+        const validExt=/\.(jpg|jpeg|png)(\?.*)?$/i.test(fotoRaw);
+        if(!validExt){
+          alert('URL muss auf .jpg, .jpeg oder .png enden.');
+          return;
+        }
+        foto=fotoRaw;
       }
     }
     
@@ -2183,14 +2215,28 @@ function postNews(e){
   const titel=sanitize(document.getElementById('news-titel').value).slice(0,140);
   const text=sanitize(document.getElementById('news-text').value).slice(0,1200);
   let bildRaw=document.getElementById('news-bildurl').value.trim();
-  // Validate image file if uploaded
-  if(bildRaw&&bildRaw.startsWith('data:image/')){
-    if(!newsFileValid){
-      alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
-      return;
+  
+  // Validate image
+  let bildUrl='';
+  if(bildRaw){
+    if(bildRaw.startsWith('data:image/')){
+      // Must be from a validated local upload
+      if(!newsFileValid){
+        alert('Ungültiges Bildformat. Bitte nur JPG, PNG, GIF oder WEBP verwenden.');
+        return;
+      }
+      bildUrl=bildRaw;
+    }else{
+      // External URL - validate extension
+      const validExt=/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(bildRaw);
+      if(!validExt){
+        alert('URL muss auf .jpg, .jpeg, .png, .gif oder .webp enden.');
+        return;
+      }
+      bildUrl=bildRaw;
     }
   }
-  const bildUrl=sanitizeUrl(bildRaw)||undefined;
+  
   if(!titel||!text){alert('Bitte Titel und Text ausfüllen.');return}
   const now=new Date();const datum=`${String(now.getDate()).padStart(2,'0')}.${String(now.getMonth()+1).padStart(2,'0')}.${now.getFullYear()}`;
   const edits=JSON.parse(localStorage.getItem('fc_trainer_edits')||'{}');

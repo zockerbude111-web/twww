@@ -215,7 +215,7 @@ img {
     border-radius: 2px;
 }
 
-/* Buttons */
+/* Buttons - Consolidated */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -238,7 +238,7 @@ img {
     color: white;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
     background: var(--red-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
@@ -250,7 +250,7 @@ img {
     border: 2px solid white;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
     background: white;
     color: var(--blue);
     transform: translateY(-2px);
@@ -261,6 +261,21 @@ img {
     cursor: not-allowed;
     transform: none;
 }
+
+/* Action Buttons */
+.btn-action {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #fff;
+    transition: opacity 0.2s;
+}
+
+.btn-edit { background-color: #007bff; }
+.btn-delete { background-color: #dc3545; }
+.btn-action:hover { opacity: 0.8; }
 
 /* Forms */
 .form-group {
@@ -659,20 +674,6 @@ img {
     display: flex;
     gap: 8px;
 }
-
-.btn-action {
-    padding: 4px 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    color: #fff;
-    transition: opacity 0.2s;
-}
-
-.btn-edit { background-color: #007bff; }
-.btn-delete { background-color: #dc3545; }
-.btn-action:hover { opacity: 0.8; }
 
 /* Image Preview in Form */
 .image-preview-container {

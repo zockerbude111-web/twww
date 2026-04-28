@@ -988,10 +988,6 @@ function renderDashTab(myTeams,allNews){
       <div>
         <h2 style="font-family:Impact,sans-serif;font-size:22px;color:var(--blue);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Deine Mannschaften</h2>
         <p style="font-size:13px;color:#9ca3af;margin-bottom:16px">Wähle eine Mannschaft aus, um deren Infos zu bearbeiten.</p>
-        <div class="form-field" style="margin-bottom:16px">
-          <label class="form-label">Mannschaft</label>
-          <select class="form-select" id="team-edit-select" onchange="selectTeamEdit(this.value)">${teamOpts}<option value="">-- Bitte wählen --</option></select>
-        </div>
         <div style="display:flex;flex-direction:column;gap:12px">
           ${myTeams.map(t=>{
             const edits=getTeamEdits(t.slug);const hasEdits=edits&&(edits.beschreibung||edits.trainingZeit||edits.trainingTage);

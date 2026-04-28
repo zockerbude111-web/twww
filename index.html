@@ -940,7 +940,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
   </div>
 </div>
 
-<script src="fc-image-patch.js"></script>
+<script src="js/fc-image-patch.js"></script>
 <script>
 'use strict';
 
@@ -1848,6 +1848,12 @@ function renderDashTab(myTeams,allNews){
   const c=document.getElementById('dash-tab-content');
   if(!c)return;
   if(dashTab==='info'){
+    // Clear file input and reset validation when rendering info tab
+    const existingFileInput=document.getElementById('edit-file-input');
+    if(existingFileInput)existingFileInput.value='';
+    const existingFileName=document.getElementById('edit-file-name');
+    if(existingFileName)existingFileName.textContent='';
+    
     c.innerHTML=`<div style="display:grid;gap:24px;grid-template-columns:1fr" class="dash-info-grid">
       <div>
         <h2 style="font-family:Impact,sans-serif;font-size:22px;color:var(--blue);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Deine Mannschaften</h2>
@@ -2063,7 +2069,7 @@ function handleEditFileUpload(input,teamSlug){
     const fileName=document.getElementById('edit-file-name');
     if(urlInput)urlInput.value=dataUrl;
     if(prev)prev.style.display='block';
-    if(img)img.src=dataUrl;
+    if(img){img.src=dataUrl;img.onload=null;} // Force re-render
     if(fileName)fileName.textContent=file.name;
   };
   reader.readAsDataURL(file);
@@ -2071,7 +2077,14 @@ function handleEditFileUpload(input,teamSlug){
 
 function selectTeamEdit(slug){
   selectedTeamEdit=slug;
-  editFileValidByTeam[slug]=false; // Reset file validation flag when switching teams
+  editFileValidByTeam[slug]=false; // Reset file validation flag for the newly selected team
+  // Also clear any file input state
+  setTimeout(()=>{
+    const fi=document.getElementById('edit-file-input');
+    const fn=document.getElementById('edit-file-name');
+    if(fi)fi.value='';
+    if(fn)fn.textContent='';
+  },0);
   switchDashTab('info')
 }
 function renderTeamEditForm(team){
@@ -2099,14 +2112,14 @@ function renderTeamEditForm(team){
     <div class="form-field" style="margin-bottom:20px">
       <label class="form-label">Mannschaftsfoto</label>
       <input class="form-input" id="edit-foto" value="${esc(fotoUrl)}" readonly placeholder="Lokale Datei hochladen" style="background:#f9fafb;color:#9ca3af">
-      <div id="edit-foto-preview" style="margin-top:8px;border-radius:10px;overflow:hidden;height:120px;${fotoUrl?'':'display:none'}">
-        <img id="edit-foto-preview-img" src="${esc(fotoUrl)}" style="width:100%;height:100%;object-fit:cover" alt="">
+      <div id="edit-foto-preview" style="margin-top:8px;border-radius:10px;overflow:hidden;height:120px;display:none">
+        <img id="edit-foto-preview-img" src="" style="width:100%;height:100%;object-fit:cover" alt="">
       </div>
       <div style="margin-top:10px">
         <label class="upload-area" style="display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:#f0f4ff;border:2px dashed #94a3b8;border-radius:12px;padding:16px;font-size:13px;font-weight:700;color:#142850;transition:border-color .2s,background .2s;user-select:none;margin:0" onmouseenter="this.style.borderColor='#d72638';this.style.background='#fee2e2'" onmouseleave="this.style.borderColor='#94a3b8';this.style.background='#f0f4ff'">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Lokale Datei wählen (JPG/PNG/GIF/WEBP, max. 5MB)
-          <input type="file" id="edit-file-input" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none" onchange="handleEditFileUpload(this,'${team.slug}')">
+          Lokale Datei wählen (JPG/PNG, max. 5MB)
+          <input type="file" id="edit-file-input" accept="image/jpeg,image/png" style="display:none" onchange="handleEditFileUpload(this,'${team.slug}')">
         </label>
         <p id="edit-file-name" class="file-name-display"></p>
       </div>

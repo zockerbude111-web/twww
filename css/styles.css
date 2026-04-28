@@ -181,8 +181,8 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 .breadcrumb-current{color:var(--red);font-weight:700}
 
 /* Team page layout */
-.team-layout{max-width:1280px;margin:0 auto;padding:48px 20px;display:grid;gap:32px;grid-template-columns:1fr}
-@media(min-width:1024px){.team-layout{padding:48px 32px;grid-template-columns:1fr 320px}}
+.team-layout{max-width:1280px;margin:0 auto;padding:48px 20px 0;display:grid;gap:32px;grid-template-columns:1fr}
+@media(min-width:1024px){.team-layout{padding:48px 32px 0;grid-template-columns:1fr 320px}}
 .team-layout-no-bottom{padding-bottom:0}
 .team-main{display:flex;flex-direction:column;gap:24px}
 .team-sidebar{display:flex;flex-direction:column;gap:24px}

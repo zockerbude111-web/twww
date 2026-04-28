@@ -1,0 +1,27 @@
+# Block PHP execution in images directory
+<FilesMatch "\.(php|php5|phtml)$">
+    Deny from all
+</FilesMatch>
+
+# Set proper MIME types
+AddType image/jpeg jpg jpeg
+AddType image/png png
+AddType image/gif gif
+AddType image/webp webp
+AddType image/svg+xml svg
+
+# Enable browser caching for images
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Cache-Control "public, max-age=2592000"
+</IfModule>

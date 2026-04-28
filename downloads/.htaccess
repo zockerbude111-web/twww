@@ -1,0 +1,9 @@
+# Block direct access to files - all downloads must go through download.php
+<FilesMatch "\.(pdf|doc|docx|xls|xlsx|zip|rar)$">
+    Deny from all
+</FilesMatch>
+
+# Prevent PHP execution
+<FilesMatch "\.(php|php5|phtml)$">
+    Deny from all
+</FilesMatch>

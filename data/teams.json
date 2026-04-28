@@ -1,0 +1,6 @@
+[
+    {"id": "1", "name": "1. Herren", "coach": "Michael Schmidt", "image": "1-herren.jpg"},
+    {"id": "2", "name": "A-Junioren (U19)", "coach": "Thomas Müller", "image": "a-jugend.jpg"},
+    {"id": "3", "name": "D-Junioren (U13)", "coach": "Stefan Weber", "image": "d-jugend.jpg"},
+    {"id": "4", "name": "E-Jugend (U11)", "coach": "", "image": ""}
+]

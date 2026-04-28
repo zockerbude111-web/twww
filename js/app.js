@@ -984,30 +984,30 @@ function renderDashTab(myTeams,allNews){
     if(existingFileName)existingFileName.textContent='';
     
     const teamOpts=myTeams.map(t=>`<option value="${t.slug}" ${selectedTeamEdit===t.slug?'selected':''}>${esc(t.name)}</option>`).join('');
-    c.innerHTML=`<div style="display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))" class="dash-info-grid">
+    c.innerHTML=`<div class="dash-info-grid">
       <div>
-        <h2 style="font-family:Impact,sans-serif;font-size:22px;color:var(--blue);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Deine Mannschaften</h2>
-        <p style="font-size:13px;color:#9ca3af;margin-bottom:16px">Wähle eine Mannschaft aus, um deren Infos zu bearbeiten.</p>
-        <div class="form-field" style="margin-bottom:16px">
+        <h2 class="section-title-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Deine Mannschaften</h2>
+        <p class="text-muted mb-3">Wähle eine Mannschaft aus, um deren Infos zu bearbeiten.</p>
+        <div class="form-field mb-3">
           <label class="form-label">Mannschaft</label>
           <select class="form-select" id="team-edit-select" onchange="selectTeamEdit(this.value)">${teamOpts}<option value="">-- Bitte wählen --</option></select>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="team-list">
           ${myTeams.map(t=>{
             const edits=getTeamEdits(t.slug);const hasEdits=edits&&(edits.beschreibung||edits.trainingZeit||edits.trainingTage);
-            return `<button onclick="selectTeamEdit('${t.slug}')" style="text-align:left;background:#fff;border-radius:16px;padding:20px;border:2px solid ${selectedTeamEdit===t.slug?'var(--red)':'rgba(219,234,254,.5)'};box-shadow:0 1px 3px rgba(0,0,0,.1);transition:all .2s;width:100%" ${selectedTeamEdit===t.slug?'':'onmouseover="this.style.boxShadow=\'0 4px 12px rgba(0,0,0,.1)\'" onmouseout="this.style.boxShadow=\'0 1px 3px rgba(0,0,0,.1)\'"'}>
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div><h3 style="font-weight:700;color:var(--blue);font-size:15px">${esc(t.name)}</h3><p style="font-size:12px;color:#9ca3af;margin-top:2px">${esc(t.liga)}</p></div>
-                <div style="display:flex;align-items:center;gap:8px">${hasEdits?'<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;background:rgba(16,185,129,.1);color:#059669">Bearbeitet</span>':''}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            return `<button onclick="selectTeamEdit('${t.slug}')" class="team-select-btn ${selectedTeamEdit===t.slug?'active':''}">
+              <div class="team-select-inner">
+                <div><h3 class="team-name">${esc(t.name)}</h3><p class="team-liga">${esc(t.liga)}</p></div>
+                <div class="team-select-icon">${hasEdits?'<span class="badge-edited">Bearbeitet</span>':''}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
               </div>
             </button>`;}).join('')}
         </div>
       </div>
       <div id="team-edit-panel">
-        ${selectedTeamEdit?renderTeamEditForm(myTeams.find(t=>t.slug===selectedTeamEdit)):`<div style="background:#f9fafb;border-radius:16px;padding:48px;border:1px solid rgba(219,234,254,.5);text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center">
-          <div style="width:64px;height:64px;border-radius:16px;background:rgba(219,234,254,.6);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
-          <h3 style="font-weight:700;color:var(--blue);margin-bottom:8px">Wähle eine Mannschaft</h3>
-          <p style="font-size:13px;color:#9ca3af">Klicke links auf eine Mannschaft oder verwende das Dropdown-Menü, um deren Infos zu bearbeiten.</p>
+        ${selectedTeamEdit?renderTeamEditForm(myTeams.find(t=>t.slug===selectedTeamEdit)):`<div class="empty-state">
+          <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
+          <h3 class="empty-state-title">Wähle eine Mannschaft</h3>
+          <p class="empty-state-desc">Klicke links auf eine Mannschaft oder verwende das Dropdown-Menü, um deren Infos zu bearbeiten.</p>
         </div>`}
       </div>
     </div>`;
@@ -1225,11 +1225,25 @@ function handleEditFileUpload(input,teamSlug){
       urlInput.style.background='#fff';
       urlInput.style.color='#1a1a2e';
     }
-    if(prev)prev.style.display='block';
-    if(img){img.src=dataUrl;img.onload=null;} // Force re-render
+    if(prev){prev.classList.add('show');img.src=dataUrl;img.onload=null;} // Force re-render
     if(fileName)fileName.textContent=file.name;
   };
   reader.readAsDataURL(file);
+}
+
+// Show/hide foto preview based on URL input
+function previewEditFoto(input,teamSlug){
+  const v=input.value.trim();
+  const prev=document.getElementById('edit-foto-preview');
+  const img=document.getElementById('edit-foto-preview-img');
+  if(!prev||!img)return;
+  if(v&&/\.(jpg|jpeg|png)(\?.*)?$/i.test(v)){
+    prev.classList.add('show');
+    img.src=v;
+  }else{
+    prev.classList.remove('show');
+    img.src='';
+  }
 }
 
 function selectTeamEdit(slug){
@@ -1252,11 +1266,13 @@ function selectTeamEdit(slug){
     // Clear preview
     const prev=document.getElementById('edit-foto-preview');
     const img=document.getElementById('edit-foto-preview-img');
-    if(prev)prev.style.display='none';
-    if(img)img.src='';
+    if(prev){prev.classList.remove('show');img.src='';}
     // Update dropdown to reflect selection
     const sel=document.getElementById('team-edit-select');
     if(sel)sel.value=slug||'';
+    // Scroll to top of edit panel on mobile
+    const panel=document.getElementById('team-edit-panel');
+    if(panel&&window.innerWidth<1024){panel.scrollIntoView({behavior:'smooth',block:'start'});}
   },0);
   switchDashTab('info')
 }
@@ -1269,46 +1285,44 @@ function renderTeamEditForm(team){
   const tp=edits.trainingsplatz||team.trainingsplatz;
   const fotoUrl=edits.fotoUrl||'';
   return `<div class="form-wrap">
-    <h3 style="font-family:Impact,sans-serif;font-size:18px;color:var(--blue);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg> ${esc(team.name)} bearbeiten</h3>
-    <div class="form-field" style="margin-bottom:16px">
+    <h3 class="form-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg> ${esc(team.name)} bearbeiten</h3>
+    <div class="form-field mb-3">
       <label class="form-label">Beschreibung</label>
       <textarea class="form-textarea" id="edit-beschreibung" rows="4">${esc(desc)}</textarea>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <div class="form-grid two mb-3">
       <div class="form-field"><label class="form-label">Trainingszeiten</label><input class="form-input" id="edit-zt" value="${esc(zt)}"></div>
       <div class="form-field"><label class="form-label">Trainingsplatz</label><input class="form-input" id="edit-tp" value="${esc(tp)}"></div>
     </div>
-    <div class="form-field" style="margin-bottom:16px">
+    <div class="form-field mb-3">
       <label class="form-label">Trainingstage (z.B. "Dienstag & Donnerstag")</label>
       <input class="form-input" id="edit-td" value="${esc(td)}">
     </div>
-    <div class="form-field" style="margin-bottom:20px">
+    <div class="form-field mb-4">
       <label class="form-label">Mannschaftsfoto</label>
-      <input class="form-input" id="edit-foto" value="${esc(fotoUrl)}" placeholder="https://example.com/foto.jpg oder lokale Datei hochladen" style="background:#fff;color:#1a1a2e">
-      <p style="font-size:11px;color:#9ca3af;margin-top:4px">Fügen Sie eine URL ein (nur .jpg/.jpeg/.png) oder laden Sie eine lokale Datei hoch</p>
-      <div id="edit-foto-preview" style="margin-top:8px;border-radius:10px;overflow:hidden;height:120px;display:none">
-        <img id="edit-foto-preview-img" src="" style="width:100%;height:100%;object-fit:cover" alt="">
+      <input class="form-input" id="edit-foto" value="${esc(fotoUrl)}" placeholder="https://example.com/foto.jpg oder lokale Datei hochladen" onchange="previewEditFoto(this,'${team.slug}')">
+      <p class="form-hint">Fügen Sie eine URL ein (nur .jpg/.jpeg/.png) oder laden Sie eine lokale Datei hoch</p>
+      <div id="edit-foto-preview" class="foto-preview${fotoUrl?' show':''}">
+        <img id="edit-foto-preview-img" src="${esc(fotoUrl)}" alt="">
       </div>
-      <div style="margin-top:10px">
-        <label class="upload-area" style="display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:#f0f4ff;border:2px dashed #94a3b8;border-radius:12px;padding:16px;font-size:13px;font-weight:700;color:#142850;transition:border-color .2s,background .2s;user-select:none;margin:0" onmouseenter="this.style.borderColor='#d72638';this.style.background='#fee2e2'" onmouseleave="this.style.borderColor='#94a3b8';this.style.background='#f0f4ff'">
+      <div class="mt-2">
+        <label class="upload-area" onmouseenter="this.style.borderColor='#d72638';this.style.background='#fee2e2'" onmouseleave="this.style.borderColor='#94a3b8';this.style.background='#f0f4ff'">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           Lokale Datei wählen (JPG/PNG, max. 5MB)
-          <input type="file" id="edit-file-input" accept="image/jpeg,image/png" style="display:none" onchange="handleEditFileUpload(this,'${team.slug}')">
+          <input type="file" id="edit-file-input" accept="image/jpeg,image/png" onchange="handleEditFileUpload(this,'${team.slug}')">
         </label>
         <p id="edit-file-name" class="file-name-display"></p>
       </div>
     </div>
-    <div style="display:flex;gap:12px">
-      <button onclick="saveTeamEdit('${team.slug}')" class="btn-red" style="font-size:13px">
+    <div class="form-actions">
+      <button onclick="saveTeamEdit('${team.slug}')" class="btn-red btn-sm">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Speichern
       </button>
-      <button onclick="selectedTeamEdit=null;switchDashTab('info')" style="background:#f3f4f6;color:#374151;border:none;border-radius:50px;padding:10px 20px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">Abbrechen</button>
+      <button onclick="selectedTeamEdit=null;switchDashTab('info')" class="btn-cancel">Abbrechen</button>
     </div>
   </div>`;
 }
-
-// previewEditFoto removed - no longer needed as URL input is readonly
 
 function saveTeamEdit(slug){
   try{

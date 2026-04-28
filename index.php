@@ -75,8 +75,8 @@
 <div id="mobile-overlay" onclick="closeMobileNav()"></div>
 <div id="mobile-nav">
   <div class="mobile-nav-header">
-    <span style="color:#fff;font-weight:700;font-family:Impact,sans-serif;letter-spacing:.1em">MENÜ</span>
-    <button onclick="closeMobileNav()" style="background:none;border:none;color:#fff">
+    <span class="menu-label">MENÜ</span>
+    <button onclick="closeMobileNav()" class="menu-btn-close">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
@@ -91,17 +91,17 @@
       <div class="mobile-nav-section-title">Junioren</div>
       <div id="mobile-junioren-links"></div>
     </div>
-    <div class="mobile-nav-section" style="border-top:none">
+    <div class="mobile-nav-section border-top-none">
       <button class="mobile-nav-link" onclick="navigate('training');closeMobileNav()">Training</button>
       <button class="mobile-nav-link" onclick="navigate('abteilungen');closeMobileNav()">Abteilungen</button>
       <button class="mobile-nav-link" onclick="navigate('verein');closeMobileNav()">Verein</button>
       <button class="mobile-nav-link" onclick="navigate('kontakt');closeMobileNav()">Kontakt</button>
       <button class="mobile-nav-link" onclick="navigate('downloads');closeMobileNav()">Downloads</button>
       <button class="mobile-nav-link" onclick="navigate('vermietung');closeMobileNav()">Vermietung</button>
-      <a href="https://www.fc-rotblau.de/shop" target="_blank" rel="noopener" class="mobile-nav-link" style="display:block">Fanshop ↗</a>
+      <a href="https://www.fc-rotblau.de/shop" target="_blank" rel="noopener" class="mobile-nav-link mobile-nav-link-full">Fanshop ↗</a>
     </div>
     <div class="mobile-nav-section">
-      <button class="mobile-nav-link" onclick="navigate('trainer');closeMobileNav()" style="color:rgba(190,219,255,.8);display:flex;align-items:center;gap:8px">
+      <button class="mobile-nav-link" onclick="navigate('trainer');closeMobileNav()" class="mobile-trainer-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         Trainer-Anmeldung
       </button>
@@ -120,9 +120,9 @@
     <div class="hero-stripe"></div>
     <div class="hero-glow"></div>
     <!-- Decorative circles -->
-    <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:var(--red);opacity:.08"></div>
+    <div class="circle-decor-red-lg"></div>
     <div class="hero-content">
-      <div style="max-width:1200px">
+      <div class="max-w-1200">
         <h1 class="hero-h1">Fußball für alle.<span>VfL Wilhelmshaven e. V.</span></h1>
         <p class="hero-desc">Von den Bambini bis zu den Alten Herren. Dein Verein, deine Heimat, deine Mannschaft.</p>
         <div class="hero-btns">
@@ -134,7 +134,7 @@
   </section>
 
   <!-- News -->
-  <section class="section" style="background:var(--bg)">
+  <section class="section bg-bg">
     <div class="section-inner">
       <div class="section-label"><div class="section-label-line"></div><span class="section-label-text">Neuigkeiten</span></div>
       <h2 class="section-title mb-8">Was gibt es Neues?</h2>
@@ -144,12 +144,12 @@
 
   <!-- Events -->
   <section class="events-section">
-    <div class="stripe-bg" style="position:absolute;inset:0"></div>
+    <div class="stripe-bg bg-stripe-full"></div>
     <div class="events-inner">
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:16px">
+      <div class="hero-header-flex">
         <div>
-          <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3em;color:var(--red);margin-bottom:8px">Kalender</p>
-          <h2 style="font-family:Impact,sans-serif;font-size:clamp(28px,4vw,40px);color:#fff;text-transform:uppercase">Nächste Termine</h2>
+          <p class="label-red">Kalender</p>
+          <h2 class="event-title-lg">Nächste Termine</h2>
         </div>
         <button class="btn-outline btn-sm" onclick="navigate('verein')">Alle Termine</button>
       </div>
@@ -158,7 +158,7 @@
   </section>
 
   <!-- CTA -->
-  <section class="cta-section" style="padding-top:80px">
+  <section class="cta-section pt-80">
     <div class="cta-inner">
       <div class="cta-box">
         <div class="cta-circle1"></div><div class="cta-circle2"></div>
@@ -185,7 +185,7 @@
   <div class="section">
     <div class="section-inner">
       <div class="news-grid" id="news-overview-grid"></div>
-      <div style="text-align:center;margin-top:32px"><button class="btn-outline btn-sm" onclick="navigate('home')">← Zurück zur Startseite</button></div>
+      <div class="text-center-mt32"><button class="btn-outline btn-sm" onclick="navigate('home')">← Zurück zur Startseite</button></div>
     </div>
   </div>
 </div>

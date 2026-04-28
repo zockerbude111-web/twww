@@ -625,6 +625,24 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
   </section>
 </div>
 
+<!-- NEWS OVERVIEW PAGE -->
+<div id="page-news" class="page">
+  <div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="page-hero-inner">
+      <p class="page-hero-label">Aktuelles</p>
+      <h1 class="page-hero-title">Alle Neuigkeiten</h1>
+      <p class="page-hero-desc">Bleib auf dem Laufenden – alle News vom FC Rot-Blau Musterstadt.</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="news-grid" id="news-overview-grid"></div>
+      <div style="text-align:center;margin-top:32px"><button class="btn-outline btn-sm" onclick="navigate('home')">← Zurück zur Startseite</button></div>
+    </div>
+  </div>
+</div>
+
 <!-- TEAM PAGE -->
 <div id="page-team" class="page">
   <nav class="breadcrumb">
@@ -1033,6 +1051,9 @@ function navigate(page, param=''){
     currentTeamSlug = param || TEAMS[0].slug;
     renderTeamPage(currentTeamSlug);
     document.getElementById('page-team').classList.add('active');
+  } else if(page==='news'){
+    renderNewsOverview();
+    document.getElementById('page-news').classList.add('active');
   } else {
     const el = document.getElementById('page-'+page);
     if(el) el.classList.add('active');
@@ -1096,11 +1117,11 @@ function renderHome(){
   // News
   const ng=document.getElementById('home-news');
   const allNews=getNewsWithTrainer();
-  ng.innerHTML=allNews.slice(0,6).map((n,i)=>{
+  const top6News=allNews.slice(0,6);
+  ng.innerHTML=top6News.map((n,i)=>{
     const bc=BADGE_COLORS[n.kategorie]||BADGE_COLORS.Allgemein;
     const imgSrc = n.bildUrl || NEWS_IMGS[i%NEWS_IMGS.length] || '';
-    const newsIdx = allNews.indexOf(n);
-    return `<article class="card news-card" style="cursor:pointer" onclick="showNewsDetail(${newsIdx})">
+    return `<article class="card news-card" style="cursor:pointer" onclick="showNewsOverview()">
       <div class="news-img-wrap">
         <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">
         <div class="news-img-grad"></div>
@@ -1117,6 +1138,8 @@ function renderHome(){
       </div>
     </article>`;
   }).join('');
+  // Add "Mehr Neuigkeiten" button
+  ng.innerHTML += `<div style="grid-column:1/-1;text-align:center;margin-top:24px"><button class="btn-red btn-sm" onclick="showNewsOverview()">Alle Neuigkeiten ansehen</button></div>`;
   // Events
   const eg=document.getElementById('home-events');
   eg.innerHTML=EVENTS.map(e=>`<div class="event-card">

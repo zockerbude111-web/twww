@@ -970,6 +970,55 @@ const BADGE_COLORS = {Jugend:{bg:'#DBEAFE',c:'#1E40AF'},Senioren:{bg:'#FEE2E2',c
 const BADGE_ICONS = {Jugend:'⚽',Senioren:'🏟️',Verein:'🏠',Allgemein:'📢',Trainer:'📣'};
 const NEWS_IMGS = ['/images/news-1.jpg','/images/news-2.jpg','/images/news-3.jpg'];
 
+// ========== REUSABLE TEMPLATES ==========
+function createNewsCard(n, i, onClickHandler) {
+  const bc = BADGE_COLORS[n.kategorie] || BADGE_COLORS.Allgemein;
+  const imgSrc = n.bildUrl || NEWS_IMGS[i % NEWS_IMGS.length] || '';
+  const escapedTitle = esc(n.titel.replace(/'/g, "\\'"));
+  return `<article class="card news-card" style="cursor:pointer" onclick="${onClickHandler}('${escapedTitle}')">
+    <div class="news-img-wrap">
+      <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">
+      <div class="news-img-grad"></div>
+      <span class="news-badge" style="background:${bc.bg};color:${bc.c}">${esc(n.kategorie)}</span>
+      <span class="news-date-badge">${esc(n.datum)}</span>
+    </div>
+    <div class="news-body">
+      <h3 class="news-title">${esc(n.titel)}</h3>
+      <p class="news-excerpt">${esc(n.text)}</p>
+      <div class="news-footer">
+        <span class="news-cat">${BADGE_ICONS[n.kategorie]||'📰'} ${esc(n.kategorie)}</span>
+        <span class="news-more">Lesen →</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+function createEventCard(e) {
+  return `<div class="event-card">
+    <div class="event-date-box"><span class="event-day">${dayNum(e.datum)}</span><span class="event-month">${monthShort(e.datum)}</span></div>
+    <div class="event-info">
+      <div class="event-type">${esc(e.typ)}</div>
+      <div class="event-title">${esc(e.titel)}</div>
+      <div class="event-location">${esc(e.ort)}</div>
+    </div>
+  </div>`;
+}
+
+function createFooterEventItem(e) {
+  return `<div class="footer-event-item">
+    <div class="footer-event-date"><span class="footer-event-day">${dayNum(e.datum)}</span><span class="footer-event-mon">${monthShort(e.datum)}</span></div>
+    <div class="footer-event-info"><div class="footer-event-title">${esc(e.titel)}</div><div class="footer-event-loc">${esc(e.ort)}</div></div>
+  </div>`;
+}
+
+function createTeamLinkButton(team, className, onClickFn) {
+  const b = document.createElement('button');
+  b.className = className;
+  b.textContent = team.name;
+  b.onclick = onClickFn;
+  return b;
+}
+
 const TEAMS = [
   {slug:'1-herren',name:'1. Herren',kategorie:'senioren',liga:'Kreisliga A · Staffel 3',altersklasse:'Aktive Herren ab 17 Jahre',trainer:'Thomas Müller',coTrainer:'Stefan Klein',betreuer:'Wolfgang Hartmann',trainingTage:['Dienstag','Donnerstag'],trainingZeit:'19:30 – 21:00 Uhr',trainingsplatz:'Hauptplatz (Naturrasen)',spieltag:'Sonntag',heimspielzeit:'15:00 Uhr',beschreibung:'Unsere erste Mannschaft ist das sportliche Aushängeschild des FC Rot-Blau. Mit Leidenschaft und Teamgeist kämpft das Team seit der Gründung um Punkte in der Kreisliga A.',saisonziel:'Top 5 der Kreisliga A und Pokal-Halbfinale',farbeHeim:'Rot-Blaues Trikot, schwarze Hose',farbeAuswaerts:'Weißes Trikot, weiße Hose',spieleranzahl:23,kapitan:'Markus Hoffmann',highlights:['Pokalsieger Kreispokal 2022','Aufstieg in Kreisliga A 2021','Vize-Meister 2023/24'],tabelle:[{pos:1,team:'Spvgg Oststadt',spiele:17,siege:13,unent:2,niederl:2,tore:'42:18',diff:24,punkte:41},{pos:2,team:'FC Rot-Blau',spiele:17,siege:11,unent:4,niederl:2,tore:'38:19',diff:19,punkte:37,isUs:true},{pos:3,team:'TuS Bergheim',spiele:17,siege:10,unent:3,niederl:4,tore:'35:22',diff:13,punkte:33},{pos:4,team:'SV Eintracht',spiele:17,siege:9,unent:2,niederl:6,tore:'31:28',diff:3,punkte:29},{pos:5,team:'TSV Nordheim',spiele:17,siege:7,unent:5,niederl:5,tore:'26:24',diff:2,punkte:26}],topScorer:[{name:'Patrick Lehmann',tore:14},{name:'Sebastian Berger',tore:9},{name:'Markus Hoffmann',tore:7}],kader:[{nr:1,name:'Felix Wagner',position:'Tor'},{nr:12,name:'Tim Becker',position:'Tor'},{nr:2,name:'Jonas Klein',position:'Abwehr'},{nr:3,name:'Markus Hoffmann (C)',position:'Abwehr'},{nr:4,name:'Daniel Schwarz',position:'Abwehr'},{nr:5,name:'Lukas Roth',position:'Abwehr'},{nr:6,name:'Maximilian Vogt',position:'Mittelfeld'},{nr:7,name:'Sebastian Berger',position:'Mittelfeld'},{nr:8,name:'Tobias Lang',position:'Mittelfeld'},{nr:10,name:'Patrick Lehmann',position:'Sturm'},{nr:11,name:'Christian Beck',position:'Sturm'}]},
   {slug:'2-herren',name:'2. Herren',kategorie:'senioren',liga:'Kreisliga B · Staffel 2',altersklasse:'Aktive Herren ab 17 Jahre',trainer:'Marco Weber',coTrainer:'Daniel Schmid',trainingTage:['Dienstag','Donnerstag'],trainingZeit:'19:30 – 21:00 Uhr',trainingsplatz:'Nebenplatz (Kunstrasen)',spieltag:'Sonntag',heimspielzeit:'13:00 Uhr',beschreibung:'Unsere zweite Mannschaft bietet ambitionierten Fußballern eine sportliche Heimat – als Sprungbrett zur Ersten oder langfristige Heimat mit Spaß am Spiel.',saisonziel:'Mittelfeld der Kreisliga B halten',farbeHeim:'Rot-Blaues Trikot, blaue Hose',farbeAuswaerts:'Weißes Trikot, blaue Hose',spieleranzahl:19,kapitan:'Andreas Bauer',highlights:['Aufstieg in Kreisliga B 2023','Pokal-Halbfinale 2024'],topScorer:[{name:'Niklas Wolf',tore:8},{name:'Andreas Bauer',tore:6}]},
@@ -1098,21 +1147,30 @@ function buildDropdowns(){
   const dropJun = document.getElementById('drop-junioren');
   const mobSen = document.getElementById('mobile-senioren-links');
   const mobJun = document.getElementById('mobile-junioren-links');
+  
+  // Helper to create team buttons with consistent pattern
+  const addTeamButtons = (teams, container, className, onClick) => {
+    teams.forEach(t => {
+      const b = createTeamLinkButton(t, className, onClick);
+      container.appendChild(b);
+    });
+  };
+  
   SENIOREN.forEach(t=>{
-    const b=document.createElement('button');b.className='dropdown-item';b.textContent=t.name;b.onclick=()=>navigate('team',t.slug);dropSen.appendChild(b);
-    const m=document.createElement('button');m.className='mobile-sub-link';m.textContent=t.name;m.onclick=()=>{navigate('team',t.slug);closeMobileNav()};mobSen.appendChild(m);
+    const b=createTeamLinkButton(t,'dropdown-item',()=>navigate('team',t.slug));dropSen.appendChild(b);
+    const m=createTeamLinkButton(t,'mobile-sub-link',()=>{navigate('team',t.slug);closeMobileNav()});mobSen.appendChild(m);
   });
   JUNIOREN.forEach(t=>{
-    const b=document.createElement('button');b.className='dropdown-item';b.textContent=t.name;b.onclick=()=>navigate('team',t.slug);dropJun.appendChild(b);
-    const m=document.createElement('button');m.className='mobile-sub-link';m.textContent=t.name;m.onclick=()=>{navigate('team',t.slug);closeMobileNav()};mobJun.appendChild(m);
+    const b=createTeamLinkButton(t,'dropdown-item',()=>navigate('team',t.slug));dropJun.appendChild(b);
+    const m=createTeamLinkButton(t,'mobile-sub-link',()=>{navigate('team',t.slug);closeMobileNav()});mobJun.appendChild(m);
   });
   // Footer team links
   const ftl=document.getElementById('footer-teams-links');
   const senH=document.createElement('p');senH.style.cssText='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:rgba(147,197,253,.7);margin-bottom:8px;margin-top:4px';senH.textContent='Senioren';ftl.appendChild(senH);
-  SENIOREN.forEach(t=>{const b=document.createElement('button');b.className='footer-link';b.textContent=t.name;b.onclick=()=>navigate('team',t.slug);ftl.appendChild(b)});
+  addTeamButtons(SENIOREN, ftl, 'footer-link', t=>navigate('team',t.slug));
   const junH=document.createElement('p');junH.style.cssText='font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:rgba(147,197,253,.7);margin-bottom:8px;margin-top:12px';junH.textContent='Junioren';ftl.appendChild(junH);
-  JUNIOREN.slice(0,4).forEach(t=>{const b=document.createElement('button');b.className='footer-link';b.textContent=t.name;b.onclick=()=>navigate('team',t.slug);ftl.appendChild(b)});
-  // Contact team select
+  addTeamButtons(JUNIOREN.slice(0,4), ftl, 'footer-link', t=>navigate('team',t.slug));
+  // Contact team select - keep inline for simplicity (different element type)
   const sel=document.getElementById('contact-team-select');
   const og1=document.createElement('optgroup');og1.label='Senioren';SENIOREN.forEach(t=>{const o=document.createElement('option');o.textContent=t.name;og1.appendChild(o)});sel.appendChild(og1);
   const og2=document.createElement('optgroup');og2.label='Junioren';JUNIOREN.forEach(t=>{const o=document.createElement('option');o.textContent=t.name;og2.appendChild(o)});sel.appendChild(og2);
@@ -1120,48 +1178,19 @@ function buildDropdowns(){
 
 // ========== HOME PAGE ==========
 function renderHome(){
-  // News
+  // News - using reusable template
   const ng=document.getElementById('home-news');
   const allNews=getNewsWithTrainer();
   const top6News=allNews.slice(0,6);
-  ng.innerHTML=top6News.map((n,i)=>{
-    const bc=BADGE_COLORS[n.kategorie]||BADGE_COLORS.Allgemein;
-    const imgSrc = n.bildUrl || NEWS_IMGS[i%NEWS_IMGS.length] || '';
-    return `<article class="card news-card" style="cursor:pointer" onclick="showNewsOverview()">
-      <div class="news-img-wrap">
-        <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">
-        <div class="news-img-grad"></div>
-        <span class="news-badge" style="background:${bc.bg};color:${bc.c}">${esc(n.kategorie)}</span>
-        <span class="news-date-badge">${esc(n.datum)}</span>
-      </div>
-      <div class="news-body">
-        <h3 class="news-title">${esc(n.titel)}</h3>
-        <p class="news-excerpt">${esc(n.text)}</p>
-        <div class="news-footer">
-          <span class="news-cat">${BADGE_ICONS[n.kategorie]||'📰'} ${esc(n.kategorie)}</span>
-          <span class="news-more">Lesen →</span>
-        </div>
-      </div>
-    </article>`;
-  }).join('');
+  ng.innerHTML=top6News.map((n,i)=>createNewsCard(n,i,'showNewsOverview')).join('');
   // Add "Mehr Neuigkeiten" button
   ng.innerHTML += `<div style="grid-column:1/-1;text-align:center;margin-top:24px"><button class="btn-red btn-sm" onclick="showNewsOverview()">Alle Neuigkeiten ansehen</button></div>`;
-  // Events
+  // Events - using reusable template
   const eg=document.getElementById('home-events');
-  eg.innerHTML=EVENTS.map(e=>`<div class="event-card">
-    <div class="event-date-box"><span class="event-day">${dayNum(e.datum)}</span><span class="event-month">${monthShort(e.datum)}</span></div>
-    <div class="event-info">
-      <div class="event-type">${esc(e.typ)}</div>
-      <div class="event-title">${esc(e.titel)}</div>
-      <div class="event-location">${esc(e.ort)}</div>
-    </div>
-  </div>`).join('');
-  // Footer events
+  eg.innerHTML=EVENTS.map(e=>createEventCard(e)).join('');
+  // Footer events - using reusable template
   const fe=document.getElementById('footer-events');
-  fe.innerHTML=EVENTS.slice(0,3).map(e=>`<div class="footer-event-item">
-    <div class="footer-event-date"><span class="footer-event-day">${dayNum(e.datum)}</span><span class="footer-event-mon">${monthShort(e.datum)}</span></div>
-    <div class="footer-event-info"><div class="footer-event-title">${esc(e.titel)}</div><div class="footer-event-loc">${esc(e.ort)}</div></div>
-  </div>`).join('');
+  fe.innerHTML=EVENTS.slice(0,3).map(e=>createFooterEventItem(e)).join('');
 }
 
 function getNewsWithTrainer(){
@@ -1192,26 +1221,8 @@ function showNewsOverview(){
 function renderNewsOverview(){
   const grid=document.getElementById('news-overview-grid');
   const allNews=getNewsWithTrainer();
-  grid.innerHTML=allNews.map((n,i)=>{
-    const bc=BADGE_COLORS[n.kategorie]||BADGE_COLORS.Allgemein;
-    const imgSrc = n.bildUrl || NEWS_IMGS[i%NEWS_IMGS.length] || '';
-    return `<article class="card news-card" style="cursor:pointer" onclick="openNewsDetail('${esc(n.titel.replace(/'/g, "\\'"))}')">
-      <div class="news-img-wrap">
-        <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">
-        <div class="news-img-grad"></div>
-        <span class="news-badge" style="background:${bc.bg};color:${bc.c}">${esc(n.kategorie)}</span>
-        <span class="news-date-badge">${esc(n.datum)}</span>
-      </div>
-      <div class="news-body">
-        <h3 class="news-title">${esc(n.titel)}</h3>
-        <p class="news-excerpt">${esc(n.text)}</p>
-        <div class="news-footer">
-          <span class="news-cat">${BADGE_ICONS[n.kategorie]||'📰'} ${esc(n.kategorie)}</span>
-          <span class="news-more">Lesen →</span>
-        </div>
-      </div>
-    </article>`;
-  }).join('');
+  // Using reusable template with openNewsDetail handler
+  grid.innerHTML=allNews.map((n,i)=>createNewsCard(n,i,'openNewsDetail')).join('');
 }
 
 function openNewsDetail(titel){

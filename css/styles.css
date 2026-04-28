@@ -150,6 +150,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 
 /* Hero section for inner pages */
 .page-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%)}
+
 .page-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.04) 10px,rgba(255,255,255,.04) 20px);opacity:.25}
 .page-hero-glow{position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--red);opacity:.18}
 .page-hero-inner{position:relative;max-width:1280px;margin:0 auto;padding:56px 20px;} 
@@ -160,7 +161,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 
 /* Team tab bar */
 .team-tabs{background:#fff;border-bottom:1px solid rgba(219,234,254,.5);position:sticky;top:88px;z-index:40}
-@media(min-width:1024px){.team-tabs{top:108px}}
+@media(min-width:1024px){.team-tabs{top:86px}}
 .team-tabs-inner{max-width:1280px;margin:0 auto;padding:12px 20px;overflow-x:auto;display:flex;gap:8px;align-items:center}
 @media(min-width:1024px){.team-tabs-inner{padding:12px 32px}}
 .team-tab-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#9ca3af;margin-right:8px;white-space:nowrap;flex-shrink:0}

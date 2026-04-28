@@ -69,8 +69,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 #mobile-overlay.open{opacity:1;visibility:visible}
 
 /* PAGES */
-#app{padding-top:88px}
-@media(min-width:1024px){#app{padding-top:108px}}
+#app{position:relative}
 .page{display:none;margin-top:0;padding-top:0}
 .page.active{display:block}
 
@@ -151,7 +150,8 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 .cta-desc{color:rgba(255,255,255,.8);font-size:17px;line-height:1.6;margin-bottom:32px}
 
 /* Hero section for inner pages */
-.page-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);margin-top:0}
+.page-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);margin-top:0;padding-top:88px}
+@media(min-width:1024px){.page-hero{padding-top:108px}}
 .page-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.04) 10px,rgba(255,255,255,.04) 20px);opacity:.25}
 .page-hero-glow{position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:var(--red);opacity:.18}
 .page-hero-inner{position:relative;max-width:1280px;margin:0 auto;padding:56px 20px;} 
@@ -623,7 +623,8 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 /* Additional utility classes for removing inline styles */
 .text-bold-blue{font-weight:700;color:var(--blue)}
 .hero-stripe-overlay{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.04) 10px,rgba(255,255,255,.04) 20px);opacity:.25}
-.hero-inner-relative{position:relative;max-width:1280px;margin:0 auto;padding:56px 20px}
+.hero-inner-relative{position:relative;max-width:1280px;margin:0 auto;padding:56px 20px;padding-top:0}
+@media(min-width:1024px){.hero-inner-relative{padding:56px 32px;padding-top:0}}
 .grid-gap-32-end{display:grid;gap:32px;grid-template-columns:1fr;align-items:end}
 .bg-white-border-t{background:#fff;border-top:1px solid rgba(219,234,254,.5)}
 .container-pad-48{max-width:1280px;margin:0 auto;padding:48px 20px}

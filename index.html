@@ -1178,7 +1178,7 @@ function getNewsWithTrainer(){
   });
 }
 
-// ========== TEAM PAGE ==========
+// ========== NEWS OVERVIEW ==========\nfunction showNewsOverview(){\n  navigate('news');\n}\n\nfunction renderNewsOverview(){\n  const grid=document.getElementById('news-overview-grid');\n  const allNews=getNewsWithTrainer();\n  grid.innerHTML=allNews.map((n,i)=>{\n    const bc=BADGE_COLORS[n.kategorie]||BADGE_COLORS.Allgemein;\n    const imgSrc = n.bildUrl || NEWS_IMGS[i%NEWS_IMGS.length] || '';\n    return `<article class="card news-card">\n      <div class="news-img-wrap">\n        <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">\n        <div class="news-img-grad"></div>\n        <span class="news-badge" style="background:${bc.bg};color:${bc.c}">${esc(n.kategorie)}</span>\n        <span class="news-date-badge">${esc(n.datum)}</span>\n      </div>\n      <div class="news-body">\n        <h3 class="news-title">${esc(n.titel)}</h3>\n        <p class="news-excerpt">${esc(n.text)}</p>\n        <div class="news-footer">\n          <span class="news-cat">${BADGE_ICONS[n.kategorie]||'📰'} ${esc(n.kategorie)}</span>\n          <span class="news-more">Lesen →</span>\n        </div>\n      </div>\n    </article>`;\n  }).join('');\n}\n\n// ========== TEAM PAGE ==========
 function getTeamEdits(slug){
   try{
     const edits=JSON.parse(localStorage.getItem('fc_trainer_edits')||'{}');

@@ -34,12 +34,6 @@
   </div>
   <nav class="main-nav">
     <div class="nav-inner">
-      <button class="logo-btn" onclick="navigate('home')">
-        <div class="logo-circle">FB</div>
-        <div class="logo-text">
-          <span class="logo-city">VfL Wilhelmshaven e. V.</span>
-        </div>
-      </button>
       <div class="nav-links">
         <button class="nav-link-btn" data-page="home" onclick="navigate('home')">Start</button>
         <button class="nav-link-btn" data-page="news" onclick="navigate('news')">Neuigkeiten</button>

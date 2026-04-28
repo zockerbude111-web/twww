@@ -983,10 +983,15 @@ function renderDashTab(myTeams,allNews){
     const existingFileName=document.getElementById('edit-file-name');
     if(existingFileName)existingFileName.textContent='';
     
-    c.innerHTML=`<div style="display:grid;gap:24px;grid-template-columns:1fr" class="dash-info-grid">
+    const teamOpts=myTeams.map(t=>`<option value="${t.slug}" ${selectedTeamEdit===t.slug?'selected':''}>${esc(t.name)}</option>`).join('');
+    c.innerHTML=`<div style="display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))" class="dash-info-grid">
       <div>
         <h2 style="font-family:Impact,sans-serif;font-size:22px;color:var(--blue);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Deine Mannschaften</h2>
-        <p style="font-size:13px;color:#9ca3af;margin-bottom:24px">Wähle eine Mannschaft aus, um deren Infos zu bearbeiten.</p>
+        <p style="font-size:13px;color:#9ca3af;margin-bottom:16px">Wähle eine Mannschaft aus, um deren Infos zu bearbeiten.</p>
+        <div class="form-field" style="margin-bottom:16px">
+          <label class="form-label">Mannschaft</label>
+          <select class="form-select" id="team-edit-select" onchange="selectTeamEdit(this.value)">${teamOpts}<option value="">-- Bitte wählen --</option></select>
+        </div>
         <div style="display:flex;flex-direction:column;gap:12px">
           ${myTeams.map(t=>{
             const edits=getTeamEdits(t.slug);const hasEdits=edits&&(edits.beschreibung||edits.trainingZeit||edits.trainingTage);
@@ -999,10 +1004,10 @@ function renderDashTab(myTeams,allNews){
         </div>
       </div>
       <div id="team-edit-panel">
-        ${selectedTeamEdit?renderTeamEditForm(myTeams.find(t=>t.slug===selectedTeamEdit)):`<div style="background:#f9fafb;border-radius:16px;padding:48px;border:1px solid rgba(219,234,254,.5);text-align:center">
+        ${selectedTeamEdit?renderTeamEditForm(myTeams.find(t=>t.slug===selectedTeamEdit)):`<div style="background:#f9fafb;border-radius:16px;padding:48px;border:1px solid rgba(219,234,254,.5);text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center">
           <div style="width:64px;height:64px;border-radius:16px;background:rgba(219,234,254,.6);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
           <h3 style="font-weight:700;color:var(--blue);margin-bottom:8px">Wähle eine Mannschaft</h3>
-          <p style="font-size:13px;color:#9ca3af">Klicke links auf eine Mannschaft, um deren Infos zu bearbeiten.</p>
+          <p style="font-size:13px;color:#9ca3af">Klicke links auf eine Mannschaft oder verwende das Dropdown-Menü, um deren Infos zu bearbeiten.</p>
         </div>`}
       </div>
     </div>`;
@@ -1249,6 +1254,9 @@ function selectTeamEdit(slug){
     const img=document.getElementById('edit-foto-preview-img');
     if(prev)prev.style.display='none';
     if(img)img.src='';
+    // Update dropdown to reflect selection
+    const sel=document.getElementById('team-edit-select');
+    if(sel)sel.value=slug||'';
   },0);
   switchDashTab('info')
 }
@@ -1336,6 +1344,8 @@ function saveTeamEdit(slug){
     localStorage.setItem('fc_trainer_edits',JSON.stringify(edits));
     showToast('Gespeichert!');
     selectedTeamEdit=null;
+    // Clear file validation for this team
+    editFileValidByTeam[slug]=false;
     switchDashTab('info');
   }catch(e){alert('Fehler beim Speichern: '+e.message)}
 }

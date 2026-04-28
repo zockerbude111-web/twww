@@ -11,7 +11,7 @@ function createNewsCard(n, i, onClickHandler) {
   const bc = BADGE_COLORS[n.kategorie] || BADGE_COLORS.Allgemein;
   const imgSrc = n.bildUrl || NEWS_IMGS[i % NEWS_IMGS.length] || '';
   const escapedTitle = esc(n.titel.replace(/'/g, "\\'"));
-  return `<article class="card news-card" style="cursor:pointer" onclick="${onClickHandler}('${escapedTitle}')">
+  return `<article class="card news-card cursor-pointer" onclick="${onClickHandler}('${escapedTitle}')">
     <div class="news-img-wrap">
       <img src="${esc(imgSrc)}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 200\\'><rect fill=\\'%23142850\\' width=\\'400\\' height=\\'200\\'></rect><text x=\\'50%25\\' y=\\'50%25\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' font-family=\\'sans-serif\\' font-size=\\'24\\' fill=\\'white\\'>Neuigkeit</text></svg>'" loading="lazy">
       <div class="news-img-grad"></div>
@@ -220,7 +220,7 @@ function renderHome(){
   const top6News=allNews.slice(0,6);
   ng.innerHTML=top6News.map((n,i)=>createNewsCard(n,i,'showNewsOverview')).join('');
   // Add "Mehr Neuigkeiten" button
-  ng.innerHTML += `<div style="grid-column:1/-1;text-align:center;margin-top:24px"><button class="btn-red btn-sm" onclick="showNewsOverview()">Alle Neuigkeiten ansehen</button></div>`;
+  ng.innerHTML += `<div class="grid-col-span-full text-center mt-24"><button class="btn-red btn-sm" onclick="showNewsOverview()">Alle Neuigkeiten ansehen</button></div>`;
   // Events - using reusable template
   const eg=document.getElementById('home-events');
   eg.innerHTML=EVENTS.map(e=>createEventCard(e)).join('');
@@ -271,14 +271,14 @@ function openNewsDetail(titel){
   const bc=BADGE_COLORS[news.kategorie]||BADGE_COLORS.Allgemein;
   const imgSrc = news.bildUrl || NEWS_IMGS[0] || '';
   modal.innerHTML=`
-    <div style="background:#fff;border-radius:20px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3);">
-      <button onclick="this.closest('.modal-open').remove()" style="position:absolute;top:16px;right:16px;background:rgba(0,0,0,.5);border:none;border-radius:50%;width:40px;height:40px;color:#fff;cursor:pointer;font-size:20px;z-index:10;">&times;</button>
-      ${imgSrc?`<img src="${esc(imgSrc)}" style="width:100%;height:250px;object-fit:cover;border-radius:20px 20px 0 0;" alt="">`:''}
-      <div style="padding:32px;">
-        <span style="font-size:10px;font-weight:700;padding:4px 12px;border-radius:50px;background:${bc.bg};color:${bc.c};text-transform:uppercase;letter-spacing:.1em;">${esc(news.kategorie)}</span>
-        <h2 style="font-family:Impact,sans-serif;font-size:24px;color:var(--blue);margin:16px 0 8px;text-transform:uppercase;">${esc(news.titel)}</h2>
-        <p style="font-size:12px;color:#9ca3af;margin-bottom:24px;">${esc(news.datum)} ${news.teamName?'• '+esc(news.teamName):''}</p>
-        <div style="font-size:15px;color:#374151;line-height:1.7;white-space:pre-wrap;">${esc(news.text)}</div>
+    <div class="bg-white rounded-2xl max-w-700 w-full max-h-90vh overflow-y-auto relative shadow-xl">
+      <button onclick="this.closest('.modal-open').remove()" class="close-btn">&times;</button>
+      ${imgSrc?`<img src="${esc(imgSrc)}" class="w-full h-64 object-cover rounded-t-2xl" alt="">`:''}
+      <div class="p-32">
+        <span class="badge" style="background:${bc.bg};color:${bc.c}">${esc(news.kategorie)}</span>
+        <h2 class="font-impact text-6xl text-blue mt-16 mb-8 uppercase">${esc(news.titel)}</h2>
+        <p class="text-sm-base text-muted mb-24">${esc(news.datum)} ${news.teamName?'• '+esc(news.teamName):''}</p>
+        <div class="text-base text-dark leading-loose whitespace-pre-wrap">${esc(news.text)}</div>
       </div>
     </div>
   `;
@@ -318,28 +318,28 @@ function renderTeamPage(slug){
   // Hero
   document.getElementById('team-hero-inner').innerHTML=`
     <div>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-        <span style="display:inline-flex;align-items:center;gap:6px;border-radius:50px;background:var(--red);padding:3px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#fff">${isSen?'Senioren':'Junioren'}</span>
-        <span style="font-size:11px;font-weight:600;color:rgba(190,219,255,.8);text-transform:uppercase;letter-spacing:.1em">${esc(team.altersklasse)}</span>
+      <div class="flex items-center gap-12 mb-16">
+        <span class="badge badge-red">${isSen?'Senioren':'Junioren'}</span>
+        <span class="text-sm font-semibold text-light-blue uppercase tracking-wider">${esc(team.altersklasse)}</span>
       </div>
-      <h1 style="font-family:Impact,sans-serif;font-size:clamp(40px,6vw,72px);color:#fff;text-transform:uppercase;line-height:.95;margin-bottom:12px">${esc(team.name)}</h1>
-      <p style="color:rgba(190,219,255,.9);font-size:17px;margin-bottom:16px">${esc(team.liga)}</p>
-      <p style="color:rgba(190,219,255,.8);font-size:15px;max-width:600px;line-height:1.6">${esc(desc)}</p>
+      <h1 class="font-impact text-clamp-lg text-white uppercase leading-tight mb-12">${esc(team.name)}</h1>
+      <p class="text-light-blue-soft text-xl mb-16">${esc(team.liga)}</p>
+      <p class="text-light-blue text-base max-w-600 leading-relaxed">${esc(desc)}</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;min-width:260px">
-      <div style="background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.1)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(190,219,255,.8)">Spieler</div>
-        <div style="font-family:Impact,sans-serif;font-size:36px;color:#fff;font-weight:700">${team.spieleranzahl}</div>
+    <div class="grid grid-cols-2 gap-12 min-w-260">
+      <div class="glass-card rounded-xl p-16">
+        <div class="info-label">Spieler</div>
+        <div class="info-value info-value-lg">${team.spieleranzahl}</div>
       </div>
-      <div style="background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.1)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(190,219,255,.8)">Spieltag</div>
-        <div style="font-family:Impact,sans-serif;font-size:22px;color:#fff;font-weight:700">${esc(team.heimspielzeit)}</div>
-        <div style="font-size:11px;color:rgba(190,219,255,.7);margin-top:2px">${esc(team.spieltag)}</div>
+      <div class="glass-card rounded-xl p-16">
+        <div class="info-label">Spieltag</div>
+        <div class="info-value info-value-md">${esc(team.heimspielzeit)}</div>
+        <div class="info-value-sm mt-8">${esc(team.spieltag)}</div>
       </div>
-      <div style="background:rgba(255,255,255,.1);backdrop-filter:blur(4px);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.1);grid-column:span 2">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(190,219,255,.8);margin-bottom:4px">Trainer</div>
-        <div style="color:#fff;font-weight:700;font-size:16px">${esc(team.trainer)}</div>
-        ${team.coTrainer?`<div style="font-size:12px;color:rgba(190,219,255,.7)">Co-Trainer: ${esc(team.coTrainer)}</div>`:''}
+      <div class="glass-card rounded-xl p-16 grid-col-span-2">
+        <div class="info-label mb-4">Trainer</div>
+        <div class="text-white font-bold text-xl">${esc(team.trainer)}</div>
+        ${team.coTrainer?`<div class="text-light-blue-dim text-sm-base">Co-Trainer: ${esc(team.coTrainer)}</div>`:''}
       </div>
     </div>`;
   // Tabs

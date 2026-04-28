@@ -4,11 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#142850"/>
-<meta name="description" content="FC Rot-Blau Musterstadt – Dein Fussballverein in Deutschland."/>
+<meta name="description" content="VfL Wilhelmshaven e. V. – Dein Sportverein in Wilhelmshaven."/>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self'; frame-ancestors 'none';"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <link rel="stylesheet" href="css/styles.css"/>
-<title>FC Rot-Blau Musterstadt | Fussballverein</title>
+<title>VfL Wilhelmshaven e. V. | Sportverein</title>
 </head>
 <body>
 
@@ -23,12 +23,12 @@
         </span>
         <span class="header-top-item">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          info@fc-rotblau.de
+          info@vfl-wilhelmshaven.de
         </span>
       </span>
       <span class="header-top-item">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        Musterweg 12 · 12345 Musterstadt
+        Musterweg 12 · 12345 Wilhelmshaven
       </span>
     </div>
   </div>
@@ -37,8 +37,7 @@
       <button class="logo-btn" onclick="navigate('home')">
         <div class="logo-circle">FB</div>
         <div class="logo-text">
-          <span class="logo-name">FC ROT-BLAU</span>
-          <span class="logo-city">MUSTERSTADT</span>
+          <span class="logo-city">VfL Wilhelmshaven e. V.</span>
         </div>
       </button>
       <div class="nav-links">
@@ -123,9 +122,9 @@
     <!-- Decorative circles -->
     <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:var(--red);opacity:.08"></div>
     <div class="hero-content">
-      <div style="max-width:700px">
-        <h1 class="hero-h1">FC Rot-Blau<span>Musterstadt</span></h1>
-        <p class="hero-desc">Fußball für alle – von den Bambini bis zu den Alten Herren. Dein Verein, deine Heimat, deine Mannschaft.</p>
+      <div style="max-width:1200px">
+        <h1 class="hero-h1">Fußball für alle.<span>VfL Wilhelmshaven e. V.</span></h1>
+        <p class="hero-desc">Von den Bambini bis zu den Alten Herren. Dein Verein, deine Heimat, deine Mannschaft.</p>
         <div class="hero-btns">
           <button class="btn-red" onclick="navigate('kontakt')">Probetraining buchen <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
           <button class="btn-outline" onclick="navigate('team','1-herren')">Unsere Mannschaften</button>
@@ -138,7 +137,7 @@
   <section class="section" style="background:var(--bg)">
     <div class="section-inner">
       <div class="section-label"><div class="section-label-line"></div><span class="section-label-text">Neuigkeiten</span></div>
-      <h2 class="section-title mb-8">Was ist los beim FC</h2>
+      <h2 class="section-title mb-8">Was gibt es Neues?</h2>
       <div class="news-grid" id="home-news"></div>
     </div>
   </section>
@@ -180,7 +179,7 @@
     <div class="page-hero-inner">
       <p class="page-hero-label">Aktuelles</p>
       <h1 class="page-hero-title">Alle Neuigkeiten</h1>
-      <p class="page-hero-desc">Bleib auf dem Laufenden – alle News vom FC Rot-Blau Musterstadt.</p>
+      <p class="page-hero-desc">Bleib auf dem Laufenden – alle News vom VfL Wilhelmshaven e. V..</p>
     </div>
   </div>
   <div class="section">
@@ -271,7 +270,7 @@
     <div class="page-hero-inner">
       <p class="page-hero-label">Unser Verein</p>
       <h1 class="page-hero-title">Abteilungen</h1>
-      <p class="page-hero-desc">Der FC Rot-Blau Musterstadt ist mehr als nur Fußball.</p>
+      <p class="page-hero-desc">Der VfL Wilhelmshaven e. V. ist mehr als nur Fußball.</p>
     </div>
   </div>
   <div class="section-inner" style="padding-top:64px;padding-bottom:80px">
@@ -286,7 +285,7 @@
     <div class="page-hero-inner">
       <p class="page-hero-label">Über uns</p>
       <h1 class="page-hero-title">Mehr als nur Fußball</h1>
-      <p class="page-hero-desc">Seit über 50 Jahren die sportliche Heimat von Musterstadt.</p>
+      <p class="page-hero-desc">Seit über 50 Jahren die sportliche Heimat von Wilhelmshaven.</p>
     </div>
   </div>
   <!-- Stats bar -->
@@ -324,7 +323,7 @@
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon" style="background:var(--red)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <div><div class="contact-info-label">Adresse</div><div class="contact-info-val">Musterweg 12</div><div class="contact-info-sub">12345 Musterstadt</div></div>
+        <div><div class="contact-info-label">Adresse</div><div class="contact-info-val">Musterweg 12</div><div class="contact-info-sub">12345 Wilhelmshaven</div></div>
       </div>
     </div>
   </div>
@@ -447,10 +446,10 @@
       <div>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
           <div style="width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px;flex-shrink:0">FB</div>
-          <div><span style="display:block;color:#fff;font-weight:700;font-size:13px;font-family:Impact,sans-serif;letter-spacing:.1em">FC ROT-BLAU</span><span style="display:block;color:rgba(190,219,255,.7);font-size:9px;letter-spacing:.2em">MUSTERSTADT</span></div>
+          <div><span style="display:block;color:#fff;font-weight:700;font-size:13px;font-family:Impact,sans-serif;letter-spacing:.1em">VfL Wilhelmshaven e. V.</span><span style="display:block;color:rgba(190,219,255,.7);font-size:9px;letter-spacing:.2em">Wilhelmshaven</span></div>
         </div>
         <p style="color:rgba(190,219,255,.8);font-size:13px;line-height:1.7;margin-bottom:16px">Fußball für alle – seit 1972. Verein mit über 420 Mitgliedern.</p>
-        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Musterweg 12, 12345 Musterstadt</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Musterweg 12, 12345 Wilhelmshaven</div>
         <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 01234 / 567 890</div>
         <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> info@fc-rotblau.de</div>
       </div>
@@ -476,7 +475,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 FC Rot-Blau Musterstadt. Alle Rechte vorbehalten.</p>
+      <p class="footer-copy">© 2026 VfL Wilhelmshaven e. V.. Alle Rechte vorbehalten.</p>
       <div class="footer-legal">
         <button>Impressum</button>
         <button>Datenschutz</button>

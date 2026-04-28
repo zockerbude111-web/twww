@@ -208,9 +208,9 @@
     <div class="team-tabs-inner" id="team-tabs"></div>
   </div>
   <!-- Content -->
-  <div class="team-layout" id="team-content"></div>
+  <div class="team-layout team-layout-no-bottom" id="team-content"></div>
   <!-- More teams -->
-  <section class="bg-white-border-t">
+  <section class="bg-white-border-t" style="margin-top:0">
     <div class="container-pad-48">
       <p class="team-more-label" id="team-more-label">Weitere Teams</p>
       <h3 class="team-more-title" id="team-more-title"></h3>

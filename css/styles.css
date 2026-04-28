@@ -630,6 +630,7 @@ nav.main-nav{background:rgba(20,40,80,.92);backdrop-filter:blur(16px)}
 .team-more-title{font-family:Impact,sans-serif;font-size:clamp(20px,3vw,28px);color:var(--blue);text-transform:uppercase;margin-bottom:24px}
 .grid-auto-220{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .sticky-filter-bar{background:#fff;border-bottom:1px solid rgba(219,234,254,.5);position:sticky;top:88px;z-index:40}
+@media(min-width:1024px){.sticky-filter-bar{top:86px}}
 .filter-bar-inner{max-width:1280px;margin:0 auto;padding:16px 20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .filter-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:#9ca3af;margin-right:8px}
 .section-heading-mb{font-family:Impact,sans-serif;font-size:clamp(22px,3vw,32px);color:var(--blue);text-transform:uppercase;margin-bottom:24px}
